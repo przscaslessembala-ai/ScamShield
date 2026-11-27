@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>ScamShield.Core</RootNamespace>
+    <AssemblyName>ScamShield.Core</AssemblyName>
+    <Description>Contrats partagés (modèles et interfaces) entre les modules ScamShield.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+</Project>
