@@ -1,0 +1,10 @@
+# Normalise les fins de ligne entre les machines de l'équipe
+* text=auto
+
+*.cs text diff=csharp
+*.csproj text
+*.sln text eol=crlf
+*.slnx text
+*.md text
+*.yml text
+*.json text

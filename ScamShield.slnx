@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/ScamShield.Core/ScamShield.Core.csproj" />
+  <Project Path="src/ScamShield.Fakes/ScamShield.Fakes.csproj" />
+  <Project Path="tests/ScamShield.Core.Tests/ScamShield.Core.Tests.csproj" />
+</Solution>

@@ -1,0 +1,33 @@
+# Résultats de compilation
+[Bb]in/
+[Oo]bj/
+publish/
+*.nupkg
+
+# Visual Studio / VS Code / Rider
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.DotSettings.user
+
+# Tests et couverture
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Fichiers locaux
+*.log
+appsettings.Local.json
+.env
+
+# Quarantaine et fichiers de test dangereux : ne jamais versionner
+quarantine/
+*.quar
+eicar*
+
+# Système
+Thumbs.db
+.DS_Store
