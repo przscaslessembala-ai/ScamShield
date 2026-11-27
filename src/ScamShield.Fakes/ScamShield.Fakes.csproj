@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>ScamShield.Fakes</RootNamespace>
+    <AssemblyName>ScamShield.Fakes</AssemblyName>
+    <Description>Implémentations factices des contrats de ScamShield.Core, pour développer et tester chaque module sans attendre les autres.</Description>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScamShield.Core\ScamShield.Core.csproj" />
+  </ItemGroup>
+
+</Project>
