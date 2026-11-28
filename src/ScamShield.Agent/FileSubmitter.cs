@@ -55,20 +55,11 @@ public sealed class FileSubmitter
             var enqueued = false;
             try
             {
-                bool ready;
-                await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
-                try
-                {
-                    ready = await FileStabilizer.WaitUntilReadyAsync(
-                        fullPath,
-                        TimeSpan.FromSeconds(_options.StabilityTimeoutSeconds),
-                        cancellationToken).ConfigureAwait(false);
-                }
-                finally
-                {
-                    _gate.Release();
-                }
-
+                var ready = await FileStabilizer.WaitUntilReadyAsync(
+    fullPath,
+    TimeSpan.FromSeconds(_options.StabilityTimeoutSeconds),
+    cancellationToken,
+    gate: _gate).ConfigureAwait(false);
                 if (!ready)
                 {
                     _logger.LogWarning("Fichier ignoré (disparu, verrouillé ou inaccessible) : {Path}", fullPath);
