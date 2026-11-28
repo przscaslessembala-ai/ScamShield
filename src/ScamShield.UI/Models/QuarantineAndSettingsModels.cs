@@ -50,25 +50,50 @@ public sealed class ProtectionSettings : INotifyPropertyChanged
     public int SuspectThreshold
     {
         get => _suspectThreshold;
-        set => SetField(ref _suspectThreshold, Math.Clamp(value, 1, 99));
+        set
+        {
+            int clamped = Math.Clamp(value, 1, 99);
+            if (!SetField(ref _suspectThreshold, clamped))
+            {
+                return;
+            }
+
+            if (_dangerousThreshold < _suspectThreshold)
+            {
+                DangerousThreshold = Math.Clamp(_suspectThreshold + 1, 1, 100);
+            }
+        }
     }
 
     public int DangerousThreshold
     {
         get => _dangerousThreshold;
-        set => SetField(ref _dangerousThreshold, Math.Clamp(value, 1, 100));
+        set
+        {
+            int clamped = Math.Clamp(value, 1, 100);
+            if (!SetField(ref _dangerousThreshold, clamped))
+            {
+                return;
+            }
+
+            if (_suspectThreshold > _dangerousThreshold)
+            {
+                SuspectThreshold = Math.Clamp(_dangerousThreshold - 1, 1, 99);
+            }
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private void SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value))
         {
-            return;
+            return false;
         }
 
         field = value;
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        return true;
     }
 }

@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="ScamShield.UI.Views.TroubleshootingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ScamShield.UI.ViewModels"
+             Background="#0F172A"
+             Foreground="#F8FAFC">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Assistant de dépannage"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#F8FAFC" />
+            <TextBlock Text="Comprenez en quelques secondes ce qui se passe et quelle action effectuer."
+                       FontSize="14"
+                       Foreground="#94A3B8"
+                       Margin="0,4,0,0" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Liste des situations -->
+            <Border Grid.Column="0"
+                    Background="#1E293B"
+                    BorderBrush="#334155"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="12">
+                <StackPanel>
+                    <TextBlock Text="Situations courantes"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               Margin="4,0,0,10" />
+                    <ListBox ItemsSource="{Binding Scenarios}"
+                             SelectedItem="{Binding SelectedScenario, Mode=TwoWay}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Foreground="#F8FAFC">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:TroubleshootingScenario}">
+                                <TextBlock Text="{Binding Title}"
+                                           TextWrapping="Wrap"
+                                           Padding="8,10"
+                                           FontSize="13" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+
+            <!-- Détail rapide (< 10 secondes) + action -->
+            <Border Grid.Column="2"
+                    Background="#1E293B"
+                    BorderBrush="#334155"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="24">
+                <StackPanel>
+                    <TextBlock Text="À retenir en moins de 10 secondes"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Foreground="#38BDF8" />
+
+                    <TextBlock Text="{Binding SelectedScenario.Title}"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               TextWrapping="Wrap"
+                               Margin="0,8,0,12" />
+
+                    <Border Background="#0F172A"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="16"
+                            Margin="0,0,0,20">
+                        <TextBlock Text="{Binding SelectedScenario.QuickSummary}"
+                                   FontSize="15"
+                                   LineHeight="22"
+                                   TextWrapping="Wrap"
+                                   Foreground="#E2E8F0" />
+                    </Border>
+
+                    <Button Content="{Binding SelectedScenario.RecommendedActionLabel}"
+                            Command="{Binding RunRecommendedActionCommand}"
+                            HorizontalAlignment="Left"
+                            Padding="18,10"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Background="#0284C7"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Cursor="Hand" />
+
+                    <TextBlock Text="{Binding StatusMessage}"
+                               FontSize="13"
+                               Foreground="#94A3B8"
+                               TextWrapping="Wrap"
+                               Margin="0,16,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
