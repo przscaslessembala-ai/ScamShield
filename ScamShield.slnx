@@ -1,4 +1,12 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ScamShield.Agent/ScamShield.Agent.csproj" />
+    <Project Path="src/ScamShield.Engine/ScamShield.Engine.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ScamShield.Agent.Tests/ScamShield.Agent.Tests.csproj" />
+    <Project Path="tests/ScamShield.Engine.Tests/ScamShield.Engine.Tests.csproj" />
+  </Folder>
   <Project Path="src/ScamShield.Core/ScamShield.Core.csproj" />
   <Project Path="src/ScamShield.Fakes/ScamShield.Fakes.csproj" />
   <Project Path="tests/ScamShield.Core.Tests/ScamShield.Core.Tests.csproj" />
