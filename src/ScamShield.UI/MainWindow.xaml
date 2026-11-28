@@ -1,0 +1,279 @@
+﻿<!-- =========================================================================
+     MODULE 1 : FENÊTRE ET RESSOURCES VISUELLES (PALETTE & STYLES)
+     Rôle : Définir l'apparence sombre cybersécurité et réutiliser les mêmes
+            styles sur les cartes, champs de saisie et boutons.
+     ========================================================================= -->
+<Window x:Class="ScamShield.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ScamShield — Centre de Défense &amp; Analyse"
+        Height="620" Width="800" MinHeight="540" MinWidth="660"
+        Background="#0B1120" Foreground="#F8FAFC"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <!-- Style commun aux cartes (blocs arrondis avec bordure subtile) -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#111827"/>
+            <Setter Property="BorderBrush" Value="#1E293B"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="18"/>
+        </Style>
+
+        <!-- Style du champ de saisie -->
+        <Style x:Key="InputBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#090D16"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+            <Setter Property="CaretBrush" Value="#38BDF8"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,9"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#38BDF8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style du bouton principal (action d'analyse) -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#0284C7"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#0EA5E9"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#1E293B"/>
+                                <Setter Property="Foreground" Value="#64748B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style du bouton secondaire (réinitialisation / parcourir / effacer) -->
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1E293B"/>
+            <Setter Property="Foreground" Value="#E2E8F0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#334155"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#0F172A"/>
+                                <Setter Property="Foreground" Value="#64748B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style bleu professionnel pour la liste déroulante de filtre -->
+        <Style x:Key="FilterComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="#0C2340"/>
+            <Setter Property="Foreground" Value="#7DD3FC"/>
+            <Setter Property="BorderBrush" Value="#0284C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- Style bleu professionnel pour la liste d'historique -->
+        <Style x:Key="HistoryListViewStyle" TargetType="ListView">
+            <Setter Property="Background" Value="#081629"/>
+            <Setter Property="Foreground" Value="#E0F2FE"/>
+            <Setter Property="BorderBrush" Value="#0369A1"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Padding" Value="6"/>
+        </Style>
+    </Window.Resources>
+
+    <!-- =====================================================================
+         MODULE 2, 3 & 4 : MISE EN PAGE PRINCIPALE
+         Rôle : Afficher l'en-tête, la carte de saisie/actions et la carte
+                de diagnostic reliées à MainViewModel via Binding.
+         ===================================================================== -->
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- MODULE 2 : EN-TÊTE SCAMSHIELD -->
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+            <DockPanel LastChildFill="False">
+                <StackPanel DockPanel.Dock="Left">
+                    <TextBlock Text="SCAMSHIELD" FontSize="22" FontWeight="Bold" Foreground="#38BDF8"/>
+                    <TextBlock Text="Console de surveillance et d'analyse de menaces (MVVM)"
+                               FontSize="13" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <Border DockPanel.Dock="Right" VerticalAlignment="Center"
+                        Background="#064E3B" BorderBrush="#10B981" BorderThickness="1"
+                        CornerRadius="20" Padding="12,5">
+                    <TextBlock Text="● UI MVVM ACTIF" FontSize="11" FontWeight="Bold" Foreground="#6EE7B7"/>
+                </Border>
+            </DockPanel>
+        </Border>
+
+        <!-- MODULE 3 : CARTE DE SAISIE ET COMMANDES -->
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+            <StackPanel>
+                <TextBlock Text="CIBLE À ANALYSER (CHEMIN DE FICHIER, URL OU ÉLÉMENT)"
+                           FontSize="12" FontWeight="SemiBold" Foreground="#94A3B8" Margin="0,0,0,8"/>
+
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             Style="{StaticResource InputBoxStyle}"
+                             Text="{Binding TargetPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Button Grid.Column="1"
+                            Content="Parcourir..."
+                            Command="{Binding BrowseFileCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Margin="8,0,0,0"/>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Analyser la cible"
+                            Command="{Binding AnalyzeCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Margin="0,0,12,0"/>
+
+                    <Button Content="Réinitialiser"
+                            Command="{Binding ResetCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- MODULE 4 : CARTE DE RÉSULTAT (CURRENTRESULT) -->
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}">
+            <StackPanel VerticalAlignment="Stretch">
+                <TextBlock Text="RAPPORT D'ANALYSE"
+                           FontSize="12" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,0,0,10"/>
+
+                <TextBlock Text="{Binding CurrentResult.Status, StringFormat=Statut : {0}}"
+                           FontSize="16" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,0,0,8"/>
+
+                <TextBlock Text="{Binding CurrentResult.RiskScore, StringFormat=Score de risque : {0} / 100}"
+                           FontSize="14" FontWeight="SemiBold" Foreground="#FBBF24" Margin="0,0,0,8"/>
+
+                <TextBlock Text="{Binding LastRiskZone, StringFormat='Zone de risque : {0}'}"
+                           FontSize="13" FontWeight="SemiBold" Foreground="#38BDF8" Margin="0,0,0,10"/>
+
+                <Border Background="#090D16" BorderBrush="#1E293B" BorderThickness="1"
+                        CornerRadius="8" Padding="12">
+                    <TextBlock Text="{Binding CurrentResult.Summary, StringFormat=Résumé : {0}}"
+                               FontSize="13" Foreground="#CBD5E1" TextWrapping="Wrap"/>
+                </Border>
+
+                <!-- Compteur d'alertes, filtre par zone et action de nettoyage de l'historique -->
+                <DockPanel LastChildFill="False" Margin="0,12,0,6">
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="HISTORIQUE DES ALERTES (SESSION) — Total : "
+                                   FontSize="11" FontWeight="Bold" Foreground="#38BDF8"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding AlertCount}"
+                                   FontSize="13" FontWeight="Bold" Foreground="#7DD3FC"
+                                   VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <ComboBox Style="{StaticResource FilterComboBoxStyle}"
+                                  ItemsSource="{Binding RiskFilterOptions}"
+                                  SelectedItem="{Binding SelectedRiskFilter, UpdateSourceTrigger=PropertyChanged}"
+                                  Width="120"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button DockPanel.Dock="Right"
+                            Content="Effacer l'historique"
+                            Command="{Binding ClearHistoryCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Padding="10,5"/>
+                </DockPanel>
+
+                <!-- Historique local des alertes filtrées -->
+                <ListView Style="{StaticResource HistoryListViewStyle}"
+                          ItemsSource="{Binding FilteredAlertHistory}"
+                          MaxHeight="95">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Background" Value="#0C2340"/>
+                            <Setter Property="Foreground" Value="#E0F2FE"/>
+                            <Setter Property="BorderBrush" Value="#1E3A8A"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                            <Setter Property="Padding" Value="6,4"/>
+                            <Setter Property="Margin" Value="0,0,0,3"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Margin="2,2">
+                                <Run Text="{Binding DetectedAt, StringFormat='{}{0:HH:mm:ss}'}" Foreground="#7DD3FC" FontWeight="SemiBold"/>
+                                <Run Text=" — " Foreground="#38BDF8"/>
+                                <Run Text="{Binding TargetName}" FontWeight="Bold" Foreground="#F8FAFC"/>
+                                <Run Text=" | " Foreground="#38BDF8"/>
+                                <Run Text="{Binding RiskZone}" Foreground="#FBBF24" FontWeight="Bold"/>
+                                <Run Text=" (" Foreground="#93C5FD"/>
+                                <Run Text="{Binding RiskScorePercent}" Foreground="#38BDF8" FontWeight="SemiBold"/>
+                                <Run Text="/100)" Foreground="#93C5FD"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
